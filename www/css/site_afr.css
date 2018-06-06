@@ -1,0 +1,349 @@
+/* Fade transition for carousel items */
+
+body {overflow: auto !important} /* scrolling disabled in Traveler template for some reason */
+
+#formatted_address {
+  float:none;
+  font-size: 1.2em;
+  margin-top: 2em;  
+}
+
+/* overrides of bootstrap-star-rating size */
+/*
+.rating-container .rating-stars {
+  color: #ed8323 !important;
+}
+.rating-xl {font-size: 5.0em !important;}  .rating-xl .label {font-size: 5.5em !important;}
+.rating-lg {font-size: 3.0em !important;}  .rating-lg .label {font-size: 3.0em !important;}
+.rating-md {font-size: 2.0em !important;}  .rating-md .label {font-size: 2.5em !important;}
+.rating-sm {font-size: 1.5em !important;}  .rating-sm .label {font-size: 2.0em !important;}
+.rating-xs {font-size: 1.0em !important;}  .rating-xs .label {font-size: 1.5em !important;} 
+*/
+
+
+/* Touch friendly font-awesome radio buttons: thanks http://codepen.io/BrianSassaman/pen/iLrpC */
+
+div.radio-group label.active {
+  color: #FFA3CC;
+}
+
+div.radio-group label.active.danger {
+  color: #d9534f; /* danger */
+}
+
+div.radio-group label.active.success {
+  color: #5cb85c; /* success */
+}
+
+div.radio-group label input[type="radio"]:checked {
+  color: #FFA3CC;    
+}
+  
+div.radio-group label:hover {
+  color: #7AA3CC;
+}
+
+div.radio-group label input[type="radio"] {
+    display: none;
+}
+
+div.radio-group label {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 2em;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  background-color: none;
+  border: 0px solid #c8c8c8;
+  border-radius: 3px;
+  color: #c8c8c8;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+
+div.radio-group label:active, div[data-toggle="buttons"] label.active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* end radio buttons */
+
+.main-header-search INPUT {
+  padding-right: 30px;
+  text-overflow: ellipsis;
+}
+
+.main-header-search .input-icon {
+  margin-top:6px;
+  background-color: transparent !important;
+}
+
+.advanced-search-row {
+  border-bottom: 1px solid #ccc;
+  margin-bottom:10px;
+  padding-bottom:10px;
+}
+
+
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+.panel-heading .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+
+
+.jquery-file-uploader-container SPAN.preview IMG {
+    max-height: 100px !important;
+    max-width: 100px !important;
+}
+
+.carousel .item {
+    left: 0 !important;
+      -webkit-transition: opacity .4s; /*adjust timing here */
+         -moz-transition: opacity .4s;
+           -o-transition: opacity .4s;
+              transition: opacity .4s;
+}
+.carousel-control {
+    background-image: none !important; /* remove background gradients on controls */
+}
+/* Fade controls with items */
+.next.left,
+.prev.right {
+    opacity: 1;
+    z-index: 1;
+}
+.active.left,
+.active.right {
+    opacity: 0;
+    z-index: 2;
+}
+
+.big_gmap {
+    height: 400px;
+    width: 100%;
+    border: 1px solid grey;
+}
+/* new, boostrap, move to AFR sass */
+
+fieldset {border: none;}
+
+.videowrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; 
+    height: 0; 
+    overflow: hidden;
+}
+.videowrapper iframe, 
+.videowrapper object,
+.videowrapper embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#navLoginButton {
+  margin-top: 8px;
+}
+
+#navLoginForm {
+  padding: 20px;
+}
+
+.web20 INPUT {
+  height: 35px !important;
+}
+
+.fontello::before {
+	font-family: fontello !important;
+	margin-top: 0.4em !important;
+	-color: black !important;
+	_border: 1px solid black !important;
+}
+
+.zocial.fontello::before {
+	padding-right: 1.2em !important;
+	margin-left: -0.2em !important;
+}
+
+.bs-user-menu {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #fff;
+   -webkit-box-shadow: 0px 10px 10px rgba(0,0,0,0.6);
+   -moz-box-shadow: 0px 10px 10px rgba(0,0,0,0.6);
+   box-shadow: 0px 10px 10px rgba(0,0,0,0.6);
+  color: #222;
+}
+
+TABLE.terms {
+  color: #444;
+}
+
+TABLE.terms tr {  /* second column */
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+TABLE.terms td:first-child { /* first column */
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
+  text-align: left;
+  vertical-align: top;
+  width: 60%;
+  padding: 50px;
+}
+
+TABLE.terms td:first-child + td {  /* second column */ 
+  font-size: 1.3em;
+  font-weight:bold;
+  vertical-align: top;
+  padding: 50px;
+  width: 40%;
+}
+
+TABLE.terms td:first-child + td strong {
+  font-size: 0.8em;
+  color: #888;
+}
+
+_DIV.__edit {position:relative;display:inline;}
+/* end new */
+
+/* speech bubble: thanks: Craig Buckler: http://www.sitepoint.com/pure-css3-speech-bubbles/ */
+p.speech {
+	position: relative;
+	width: 100%;
+	padding:1em;
+	text-align: center;
+	line-height: 1.5em;
+	background-color: #fff;
+	border: 1px solid #aaa;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+p.speech-left {
+	-webkit-box-shadow: 1px 1px 4px #ccc;
+	-moz-box-shadow: 1px 1px 4px #ccc;
+	box-shadow: 1px 1px 4px #ccc;
+}
+
+p.speech-right {
+	-webkit-box-shadow: -1px 1px 4px #ccc;
+	-moz-box-shadow: -1px 1px 4px #ccc;
+	box-shadow: -1px 1px 4px #ccc;
+}
+
+p.speech-left:before
+{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: -29px;
+	top: 10px;
+	border: 15px solid;
+	border-color: transparent #aaa transparent transparent;
+}
+
+p.speech-left:after
+{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: -26px;
+	top: 11px;
+	border: 14px solid;
+	border-color: transparent #fff transparent transparent;
+}
+
+p.speech-right:before
+{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	right: -29px;
+	top: 10px;
+	border: 15px solid;
+	border-color: transparent transparent transparent #aaa;
+}
+
+
+p.speech-right:after
+{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	right: -25px;
+	top: 11px;
+	border: 14px solid;
+	border-color: transparent transparent transparent #fff;
+}
+
+.user-avatar > a > img, .user-avatar > img {
+  width: 44px;
+  height: 44px;
+  margin-right: 5px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s;
+  border: 2px solid rgba(0,0,0,0.1);
+}
+
+.user-avatar-big > a > img, .user-avatar-big > img {
+  width: 88px;
+  height: 88px;
+  margin-right: 5px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s;
+  border: 2px solid rgba(0,0,0,0.1);
+}
+
+/* for intl-tel-input */
+.iti-flag {background-image: url("/bower/intl-tel-input/build/img/flags.png");}
+
+/* old */
+
+body#page_home {
+  _background-color:#B7C8B6;
+}
+
+#home_wrapper {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+}
+
+.welcome-text {
+  _position: absolute;
+  width: 100%;
+  margin: 50px 0;
+}

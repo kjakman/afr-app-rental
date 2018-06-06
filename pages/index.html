@@ -1,0 +1,47 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{$page.title}</title>
+  <meta name="description" content="{$page.description}">
+  <meta name="keywords" lang="en" content="{$page.keywords}">
+  <meta name="author" lang="en" content="{$page.author}">
+  <link rel="canonical" href="{$this_path}" />
+  
+  {foreach from = $header.css item=css}
+    {$css|style}
+  {/foreach}
+  {foreach from = $header.base_scripts item=script}
+    {$script|script}
+  {/foreach}
+  {{"include": "_html-head.html"}}  
+</head>
+
+<body id="page_{$page.name}" data-id="{$page.id}">
+
+  <div class="global-wrap">
+    <header id="main-header">       
+    {{"include": "page-top.html"}}
+    </header>
+    
+    {{"include": "_user-menu.html"}}
+    
+    {block name=content}{/block}
+    
+    {{"include": "page-footer.html"}}
+  </div>
+
+  {foreach from = $header.end_scripts item=script}
+    {$script|script_tag}
+  {/foreach}
+
+</body>
+
+</html>

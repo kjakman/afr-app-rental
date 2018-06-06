@@ -1,0 +1,12 @@
+.header-top, footer#main-footer {
+  background-color: #000;
+}
+
+footer#main-footer {
+  height: 40px;
+  padding: 10px 0 10px 0 !important;
+}  
+  
+#content_container {
+  margin-top: 40px;
+}

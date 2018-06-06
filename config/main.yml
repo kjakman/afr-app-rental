@@ -1,0 +1,20 @@
+# use query string ?reload-config to force reloading this file, otherwise cahced in session
+# live section is used for live (www.) and test (test.)
+# dev section is used for dev (dev.)
+
+# site_id: 10,109,216
+
+settings:
+  live:
+    password_file: ../config/private.txt
+  dev:  
+    password_file: ../config/private-dev.txt
+
+system_cache: off
+redis_cache: off
+mongo_cache: on
+
+some:
+  other:
+    value: foobar
+    

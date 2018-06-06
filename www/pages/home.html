@@ -1,0 +1,14 @@
+  {{"extend": "base/default.html"}}
+  {block name=content}
+  
+		<section>
+			<div class="container">
+				<h1>The Home Page</h1>
+        <p>You'll find this page in webdir/pages/ and it extends the base template webdir/pages/base/default.html</p>
+        <p>base/default.html includes pages/components/_page-top.html and pages/components/_page-footer.html </p>
+        <p>Look in include/routing.inc to find how routes are defined. They map the path to a controller</p>
+        <p>Here is a test page using the "mytest" controller controller_mytest() defined in include/controllers.inc<a href="/testpage">My Test Page</a></p>
+      </div>
+		</section><!-- section -->
+		
+	{/block}

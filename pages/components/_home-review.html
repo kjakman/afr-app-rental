@@ -1,0 +1,14 @@
+              <!-- START TESTIMONIAL -->
+              <div class="testimonial text-white">
+                <div class="testimonial-inner">
+                  <blockquote>
+                    <p>{$review.feedback_comments}</p>
+                  </blockquote>
+                </div>
+                <div class="testimonial-author">
+                  <img src="/traveler/img/50x50.png" alt="Image Alternative text" title="Sevenly Shirts - June 2012  2" />
+                  <p class="testimonial-author-name">{$review|name}</p><cite>on <a class="text-udl" href="{$review.apt_id|property_link}">{$review.apt_id|get:property:name}</a> in {$review.city_id|get:geo_city:name}</cite>
+                </div>
+              </div>
+              <!-- END TESTIMONIAL -->
+

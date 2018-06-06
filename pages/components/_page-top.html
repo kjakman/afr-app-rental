@@ -1,0 +1,46 @@
+      {$nav_class_off = 'navbar-fixed-top'}
+      <nav class="header-top navbar {$nav_class|default:'navbar-default'} no-margin">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <a class="logo" href="/">
+              {if ($site.logo_small)}
+                <img src="{$site.logo_small}" alt="$site.name" height="40"/>
+              {else}
+              {$site.name}
+              {/if}
+              </a>
+            </div><!-- end col1 -->
+            <div class="col-md-3 col-md-offset-2">
+            </div><!-- end col2 -->
+            <div class="col-md-4">
+              <div class="top-user-area clearfix">
+                <ul class="top-user-area-list list list-horizontal list-border">
+                  {if ($user.id)}
+                  <li class="top-user-area-avatar">
+                    <a href="{$smarty.const.PAGE_PROFILE|link}{$user.id}"><img class="origin round" src="{$user|userphoto:'small'}" alt="{$user.display_name}" title="{$user.full_name}" />{$user.display_name}</a>
+                  </li>
+                  <li><a href="{$this_url|replace_query_var:'act':'logout'|remove_query_var:'provider'}">{'Sign Out'|translate}</a></li>
+                  <li><a href="/inbox/" role="button"><i class="fa fa-envelope-o"></i> {$global.message_count|default:"0"}</a></li>
+                  {else}
+                  <!--li><a class="popup-text" href="#login-dialog" data-effect="mfp-3d-unfold">Login</a></li-->
+                  <li><a class="popup-text set-target-value" href="#login-dialog" data-effect="mfp-3d-unfold" data-panel="#login-container" data-target=".login-redirect" data-value="">Log-in</a></li>                  
+                  <li><a class="popup-text set-target-value" href="#login-dialog" data-effect="mfp-3d-unfold" data-panel="#register-container" data-target=".login-redirect" data-value="">Sign-up</a></li>                  
+                  
+                  <div id="login-dialog" class="mfp-with-anim mfp-hide mfp-dialog">                      
+                    {{"include": "_login-register.html" }}
+                  </div>
+                  {/if}
+
+                  {if ($user.user_level >= $smarty.const.USER_LEVEL_OWNER)} {* don't show for AFR *}
+                  <li><a href="{$smarty.const.PAGE_ADD_PROPERTY|link}" class="btn btn-primary btn-md" role="button"><i class="fa fa-home fa-sm"></i>+</a></li>
+                  {/if}
+
+                </ul>
+              </div>
+            </div><!-- end col3 -->
+          </div><!-- end row -->
+        </div><!-- end container -->
+      </nav><!-- end nav -->
+
+

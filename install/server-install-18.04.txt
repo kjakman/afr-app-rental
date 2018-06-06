@@ -1,0 +1,193 @@
+# Notes for setting up a fresh Ubuntu 18.04 LTS server with MariaDB, Nginx, and PHP 7.2.x
+
+sudo apt update
+sudo apt install nginx
+
+sudo ufw allow 'Nginx Full'
+sudo ufw allow 'OpenSSH'
+sudo ufw enable
+
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+sudo apt-get install mariadb-server mariadb-client
+sudo systemctl enable mariadb.service
+sudo systemctl start nginx.service
+
+sudo mysql_secure_installation
+sudo systemctl restart mariadb.service
+
+# below won't work without root user in new versions
+sudo mysql -u root -p
+
+create database afr;
+create database afrdev;
+grant all on afr.* to afr@localhost identified by password '*21251135A62C511E3B1BD1D060A7902408376092';
+grant all on afrdev.* to afr@localhost identified by password '*21251135A62C511E3B1BD1D060A7902408376092';
+use afr;
+source /backup/db/afr.sql
+
+# PHP 7.2
+
+sudo apt install php-fpm php-mysql
+sudo nano /etc/php/7.2/fpm/php.ini 
+# uncomment and set to 0: cgi.fix_pathinfo=0
+# set upload_max_filesize = 30M
+# set post_max_size = 30M
+
+
+sudo systemctl enable php7.2-fpm
+sudo systemctl restart php7.2-fpm
+
+sudo apt-get -y install php-pear php-dev
+sudo apt-get -y install php-curl php-xml
+sudo apt-get -y install zip unzip php7.2-zip
+sudo apt-get -y install libyaml-dev libz-dev
+sudo apt-get -y install php-raphf
+sudo apt-get -y install php-propro
+sudo apt-get -y install php7.2-mbstring
+sudo apt-get -y install php7.2-gd
+add "extension=yaml.so" to php.ini
+
+
+# php.ini
+sudo emacs /etc/php/7.2/fpm/php.ini
+extension=yaml.so
+extension=http.so
+extension=ssh2.so
+
+# optionally
+extension=redis.so
+extension=mongodb.so
+
+# pear / pecl
+sudo pecl channel-update pecl.php.net
+sudo pecl install imagick geoip
+sudo pecl install yaml-beta
+sudo pecl install pecl_http
+sudo pear install Mail
+
+# node / npm
+sudo apt-get -y install curl python-software-properties
+sudo apt-get -y install software-properties-common
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get -y install -y nodejs
+
+
+# bower
+cd /web/comps/php/afr/
+npm install -g bower
+bower init
+ln -s ./bower_components bower
+bower install
+
+# below were used for installation - result stored in bower.json
+bower install --save moment moment-range fancybox summernote bootstrap-datepicker google-markerwithlabel bootstrap3-wysihtml5-bower
+bower install --save fullcalendar magnific-popup ion-range-slider bootstrap=validator select-to-autocomplete bootstrap-star-rating
+bower install --save bootstrap-validator bootstrap-confirmation2@2.x.x parallax accounting.js codemirror
+bower install --save character-countdown jquery.countdown intl-tel-input jquery-truncate geocomplete
+bower install --save foundation-icon-fonts bootstrap-social flag-icon-css select2 addtocalendar
+
+bower install --save simpleWeather
+
+# addtocalendar has no styles
+cd /web/comps/php/afr/bower_components/addtocalendar
+git clone https://github.com/AddToCalendar/addtocalendar-styles.git
+
+
+# git
+git config --global user.email "github@kjakman.com"
+git config --global user.name "Kjetil Larsen"
+
+
+# To reset expisting repo, just use git push -f
+
+# create a new repository that has the initial commit that you want
+mkdir foo; cd foo; git init; ...; git commit
+
+# set up a remote
+git remote add origin <url-of-remote>
+git branch --set-upstream master origin/master
+
+# push your new history
+git push -f
+
+# delete obsolete remote branches
+git push origin :deprecated-branch
+
+
+# composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+sudo mv composer.phar /usr/bin
+sudo ln -s /usr/bin/composer.phar /usr/bin/composer
+cd /web/comps/php/afr/
+composer install
+
+
+# ext-curl ext-dom
+
+
+# The below file needs to be saved as function.json.php in the smarty plugins directory
+# /web/comps/php/vendor/smarty/smarty/libs/plugins/function.json.php
+
+<?php
+/**
+ * Smarty {json} plugin
+ *
+ * Type:       function
+ * Name:       json
+ * Date:       Apr 12, 2009
+ * Purpose:    Read JSON from file, decode and assign data to Smarty template variable
+ * Syntax:     {json file="filename.json"}: 'file' is a required parameter (URL)
+ *             Predefined additional parameters:
+ *             - assign="data": assign all JSON data to template variable $data
+ *             - obj2obj [ Boolean | default:false ]:
+ *               decodes JSON objects as either PHP associative arrays or PHP objects
+ *             - debug [ Boolean | default:false ]: print decoded data in template
+ *             Variable parameters:
+ *             {json file="filename.json" home="homepage" lang="languages"}:
+ *               assign (JSONdata)["homepage"] to template variable $home
+ *               and (JSONdata)["languages"] to $lang,
+ *               compare to: {config_load file="filename.conf" section="homepage"}
+ * Install:    Drop into the plugin directory
+ * @link       http://jlix.net/extensions/smarty/json
+ * @author     Sander Aarts <smarty at jlix dot net>
+ * @copyright  2009 Sander Aarts
+ * @license    LGPL License
+ * @version    1.0.1
+ * @param      array
+ * @param      Smarty
+ 
+ * Rewritten by Kjetil Larsen for Smarty v3 in 2016
+ 
+ */
+function smarty_function_json($params, &$smarty)
+{
+	if(!is_callable('json_encode')) {
+		return "{json} requires json_encode() function (PHP 5.2.0+)";
+	}
+	if (empty($params['file'])) {
+		return "{json} parameter 'file' must not be empty";
+	}
+	if (isset($params['assign'], $params[$params['assign']])) {
+		return "{json} parameter 'assign' conflicts with a variable assign parameter (both refer to the same variable)";
+	}
+	
+	$data = file_get_contents($_SERVER['DOCUMENT_ROOT'].$params['file']);
+	if (empty($data))
+		$json = '';
+	else
+		$json = json_decode($data, true);
+		
+	unset($params['file']);
+	
+	if (!empty($params['assign'])) {
+		$smarty->assign($params['assign'], $json);
+		return ''; 
+	}
+	
+	return $json;
+}

@@ -1,0 +1,264 @@
+  {{"extend": "base/default.html"}}
+  {block name=content}
+  
+
+    {$city_id = $smarty.session.city_id}
+    {$city_name = $smarty.session.city_name}
+    {$city_count = $scope.city_count}
+    
+    <!-- TOP AREA -->
+    <div class="top-area show-onload">
+    
+      <div class="bg-holder full">
+        <div class="bg-front bg-front-mob-rel">
+          <div class="container">
+          
+            <div class="tagline visible-lg" id="tagline"><span>{{"name": "tagline-heading", "type":"text", "value": "It's time to"}}</span>
+              <ul>
+                <li class="active">{{"name": "tagline-1", "type":"text", "value": "live"}}</li>
+                <li>{{"name": "tagline-2", "type":"text", "value": "have fun"}}</li>
+                <li>{{"name": "tagline-3", "type":"text", "value": "relax"}}</li>
+                <li>{{"name": "tagline-4", "type":"text", "value": "meet"}}</li>
+                <li>{{"name": "tagline-5", "type":"text", "value": "being lost"}}</li>
+                <li>{{"name": "tagline-6", "type":"text", "value": "run away"}}</li>
+                <li>{{"name": "tagline-7", "type":"text", "value": "go"}}</li>
+                <li>{{"name": "tagline-8", "type":"text", "value": "explore"}}</li>
+                <li>{{"name": "tagline-9", "type":"text", "value": "find new friends"}}</li>
+                <li>{{"name": "tagline-10", "type":"text", "value": "discover"}}</li>
+                <li>{{"name": "tagline-11", "type":"text", "value": "play"}}</li>
+              </ul>
+            </div>
+          
+            <div class="search-tabs search-tabs-bg search-tabs-abs mt50">
+
+            
+              <!--h1>Corporate Serviced Apartments</h1-->
+              <div class="tabbable">
+                <ul class="nav nav-tabs" id="myTab">
+                  <li class="active">
+                    <a href="#tab-1" data-toggle="tab"><i class="fa fa-home"></i><span >{{"name": "searchbar-tab1-header", "type":"text", "value": "Serviced Apartments"}}</span></a>
+                  </li>
+                  <!--li>
+                    <a href="#tab-2" data-toggle="tab"><i class="fa fa-plane"></i> <span >Flights</span></a>
+                  </li>
+                  <li>
+                    <a href="#tab-3" data-toggle="tab"><i class="fa fa-building-o"></i> <span >Rentals</span></a>
+                  </li>
+                  <li>
+                    <a href="#tab-4" data-toggle="tab"><i class="fa fa-car"></i> <span >Cars</span></a>
+                  </li>
+                  <li>
+                    <a href="#tab-5" data-toggle="tab"><i class="fa fa-bolt"></i> <span >Activities</span></a>
+                  </li-->
+                </ul>
+                <div class="tab-content">
+
+                  <div class="tab-pane active" id="tab-1">
+                    <h2>{{"name": "searchbar-tab1-title", "type":"text", "value": "Find Your Perfect Home"}} {if ($city_id)} in {$city_name}{/if}</h2>
+                                        
+                    <form id="searchbar" class="searchbar searchbar-form" action="{$smarty.const.PAGE_SHORTSTAY|link}" method="get">
+                      <input type="hidden" placeholder="site" name="site_id" value="{$site.id}">
+                      <input type="hidden" placeholder="type" name="t" value="{$scope.property_type|default:'shortstay'}">
+                      <input type="hidden" placeholder="center" name="center" id="center" class='location-center' value='{$get.center|default:$scope.center}'>
+                      <input type="hidden" placeholder="bounds" name="bounds" id="bounds" class='location-bounds' size="40" data-target="location_id" data-target_display="loc"  value='{$get.bounds|default:$scope.bounds}'>
+                      <input type="hidden" placeholder="loc_types" name="loc_types" value="{$global.location_types|default:'landmark,airport'}">
+                      <input type="hidden" placeholder="city_id" name="city_id" value="{$city_id}">
+                      <input type="hidden" placeholder="start" name="start" value="0">
+                      {if ($scope.city_count == 1)}
+                        <input type="hidden" name="loc" value="{$city_name}" />
+                      {else}
+                      <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon"></i>
+                        <label>{{"name": "searchbar-tab1-location-label", "type":"text", "value": "Where are you going?"}}</label>
+                        <input name="loc" value="{$city_name}" class="geocomplete form-control" placeholder="City, Airport, Point of Interest" type="text" />
+                      </div>
+                      {/if}
+                      <div class="input-daterange" data-date-format="dd-mm-yyyy">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                              <label>{{"name": "searchbar-tab1-checkin-label", "type":"text", "value": "Check-in"}}</label>
+                              <input class="form-control" name="in" type="text" />
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                              <label>{{"name": "searchbar-tab1-checkout-label", "type":"text", "value": "Check-out"}}</label>
+                              <input class="form-control" name="out" type="text" />
+                            </div>
+                          </div>
+                          <!--div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-select-plus">
+                              <label>Rooms</label>
+                              <div class="btn-group btn-group-select-num" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                  <input type="radio" name="options" />1</label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="options" />2</label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="options" />3</label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="options" />3+</label>
+                              </div>
+                              <select class="form-control hidden">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option selected="selected">4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                              </select>
+                            </div>
+                          </div-->
+                          <div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-select-plus">
+                              <label>{{"name": "searchbar-tab1-guest-label", "type":"text", "value": "Guests"}}</label>
+                              <div class="btn-group btn-group-select-num" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                  <input type="radio" name="options" />1</label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="options" />2</label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="options" />3</label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="options" />3+</label>
+                              </div>
+                              <select class="form-control hidden">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option selected="selected">4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                                <option>13</option>
+                                <option>14</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button class="btn btn-primary btn-lg" type="submit">{{"name": "searchbar-tab1-button-text", "type":"text", "value": "Search for Serviced Rentals"}}</button>
+                    </form>
+                    
+                  </div><!-- end rental tab -->
+
+                  
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- slider with cities -->
+        <div class="owl-carousel owl-slider owl-carousel-area visible-lg" id="owl-carousel-slider">
+          {foreach from=$scope.cities item=city}
+            {{"include": "_home-city-slide.html"}}
+          {/foreach}
+        </div><!-- owl carousel -->
+        
+        <div class="bg-img hidden-lg" style="background-image:url({$scope.cities[0].image});"></div>
+        <div class="bg-mask hidden-lg"></div>
+      </div>
+    </div>
+    <!-- END TOP AREA  -->
+
+    <div class="gap"></div>
+
+    <!-- feature boxes -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="row row-wrap" data-gutter="120">
+            <div class="col-md-6">
+              <div class="mb30 thumb"><i class="fa fa-dollar box-icon-left round box-icon-big box-icon-border animate-icon-top-to-bottom"></i>
+                <div class="thumb-caption">
+                  <h4 class="thumb-title">{{"name": "feature-1-heading", "type":"text", "value": "Best Price Guarantee"}}</h4>
+                  <p class="thumb-desc">{{"name": "feature-1-text", "type":"html", "value": "Habitant pulvinar nostra himenaeos pulvinar facilisi dui tincidunt luctus condimentum porttitor eros metus quisque scelerisque sollicitudin habitant"}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb30 thumb"><i class="fa fa-briefcase box-icon-left round box-icon-big box-icon-border animate-icon-top-to-bottom"></i>
+                <div class="thumb-caption">
+                  <h4 class="thumb-title">{{"name": "feature-2-heading", "type":"text", "value": "Best Destinations"}}</h4>
+                  <p class="thumb-desc">{{"name": "feature-2-text", "type":"html", "value": "Habitant pulvinar nostra himenaeos pulvinar facilisi dui tincidunt luctus condimentum porttitor eros metus quisque scelerisque sollicitudin habitant"}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb30 thumb"><i class="fa fa-send box-icon-left round box-icon-big box-icon-border animate-icon-top-to-bottom"></i>
+                <div class="thumb-caption">
+                  <h4 class="thumb-title">{{"name": "feature-3-heading", "type":"text", "value": "Combine & Save"}}</h4>
+                  <p class="thumb-desc">{{"name": "feature-3-text", "type":"html", "value": "Habitant pulvinar nostra himenaeos pulvinar facilisi dui tincidunt luctus condimentum porttitor eros metus quisque scelerisque sollicitudin habitant"}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb30 thumb"><i class="fa fa-thumbs-o-up box-icon-left round box-icon-big box-icon-border animate-icon-top-to-bottom"></i>
+                <div class="thumb-caption">
+                  <h4 class="thumb-title">{{"name": "feature-4-heading", "type":"text", "value": "Best Service"}}</h4>
+                  <p class="thumb-desc">{{"name": "feature-4-text", "type":"html", "value": "Habitant pulvinar nostra himenaeos pulvinar facilisi dui tincidunt luctus condimentum porttitor eros metus quisque scelerisque sollicitudin habitant"}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div ><!-- row -->
+    </div> <!-- container -->
+    <!-- end feature boxes -->
+    
+    <!-- reviews -->    
+    {if ($scope.reviews)}
+    <div class="bg-holder">
+      <div class="bg-mask"></div>
+      <div class="bg-blur" style="background-image:url({$scope.cities[2].image});"></div>
+      <div class="bg-content">
+        <div class="container">
+          <div class="gap"></div>
+          <h1 class="text-center text-white mb20">{{"name": "reviews-heading", "type":"text", "value": "Recent Reviews"}}</h1>
+          <div class="row row-wrap">
+            {foreach from=$scope.reviews item=review}
+            <div class="col-md-4">
+              {{"include": "_home-review.html"}}
+            </div>
+            {/foreach}          
+          </div>
+          <div class="gap-small gap"></div>
+        </div>
+      </div>
+    </div>
+    {/if}
+    <!-- end reviews -->    
+    
+    <!-- city deals -->    
+    {if ($scope.featured_rentals)}
+    <div class="container">
+      <div class="gap"></div>
+      <h1 class="text-center mb20">{{"name": "featured-heading", "type":"text", "value": "Featured Rentals"}} {if ($city_id)} in {$city_name}{/if}</h1>
+      <div class="row row-wrap">
+
+        {foreach from=$scope.featured_rentals item=rental}
+          {{"include": "_home-city-deal.html"}}
+        {/foreach}
+
+      </div>
+      <div class="gap gap-small"></div>
+    </div>
+    {/if}
+    <!-- end city deals -->    
+
+{/block}

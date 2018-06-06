@@ -1,0 +1,30 @@
+        <div class="col-md-4">
+          <div class="thumb">
+            <header class="thumb-header">
+              <a class="hover-img" href="{$rental|property_link}">
+                <img src="{$rental.media|photo:"big"}" alt="{$rental.name} Image" title="{$rental.name}" />
+                <h5 class="hover-title-center">Book Now</h5>
+              </a>
+            </header>
+            <div class="thumb-caption">
+              <ul class="icon-group text-tiny text-color">
+                <li><i class="fa fa-star"></i>
+                </li>
+                <li><i class="fa fa-star"></i>
+                </li>
+                <li><i class="fa fa-star"></i>
+                </li>
+                <li><i class="fa fa-star"></i>
+                </li>
+                <li><i class="fa fa-star-half-empty"></i>
+                </li>
+              </ul>
+              <h5 class="thumb-title"><a class="text-darken" href="{$rental|property_link}">{$rental.name}</a></h5>
+              <p class="mb0"><small><i class="fa fa-map-marker"></i> {$rental.city_name}</small>
+              </p>
+              <p class="mb0 text-darken"><span class="text-lg lh1em text-color">{$rental.currency|currency}{$rental.rate_day}</span><small> avg/night</small>
+              </p>
+            </div>
+          </div>
+        </div>
+

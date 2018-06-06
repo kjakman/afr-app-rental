@@ -1,0 +1,127 @@
+# fastcgi_param  PHP_VALUE  "include_path=.:/php/includes:./include:../include:../../include:./includes:../includes:../../includes:/web/comps/php/includes:/usr/local/lib/php:/web/comps/php/includes:/usr/local/lib/php/PEAR:/web/comps/lib/:/usr/share/php:/usr/share/php/PEAR";
+
+## Media Query - turn on for media server       
+# if ($host ~* ^media\.([a-z0-9\-]+\.([a-z]+))$) {
+#   set $media "A"; 
+# }
+# 
+# if ($request_uri !~* "route.php") {
+#   set $media  "${media}B"; 
+# }
+# 
+# if ($args !~ live=1) {
+#   set $media "${media}C"; 
+# }
+# 
+# # If domains begins with 'media.' and URI does not contain route.php
+# if ($media = ABC) { 
+#   rewrite ^(.*)$ /afr/media/route.php?src=$1&img=$media last;
+#   break; 
+# } 
+
+# API
+rewrite "^/api(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?/?$" /afr/api/index.php?_v1=$1&_v2=$2&_v3=$3&_v4=$4&_v5=$5 last;
+
+# App
+#location / {
+#   try_files $uri $uri/ /index.php;
+#}
+   
+## Only requests to our Host are allowed 
+#      if ($host !~ ^($server_name)$ ) {
+#         return 444;
+#      }
+
+## Only allow these request methods ##
+## Do not accept DELETE, SEARCH and other methods ##
+if ($request_method !~ ^(GET|HEAD|POST|DELETE)$ ) {
+   return 444;
+}
+
+## Deny certain Referers ###
+#if ( $http_referer ~* (babes|forsale|girl|jewelry|love|nudit|organic|poker|porn|sex|teen) ) {
+#  return 404;
+#  return 403;
+#}
+
+location / {
+  deny all;                     # deny by default
+  autoindex off;                # no directory listing
+  location ~ "\.(txt|html)$" {
+    allow all;                  # allow .
+  }
+
+  location ~ "/$" {
+    allow all;                  # allow if ending in slash 
+  }
+
+  # try_files $uri $uri/ /info.php;
+  
+  index  index.php index.html;  
+}
+
+location ~ \.php$ {
+  include snippets/fastcgi-php.conf;
+
+  # With php-fpm (or other unix sockets):
+  fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+
+}
+                  
+if (!-e $request_filename) {  
+  # rewrite with explicit language
+  # rewrite ^ $scheme://$host/index.php permanent
+  rewrite "^(/[a-z]{2})(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?/?$" /index.php?_el=$1&_s1=$2&_s2=$3&_s3=$4&_s4=$5 last;
+
+  # rewrite with affiliate
+  rewrite "^(/aid[u]?[0-9]{1,6})(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?/?$" /index.php?_aid=$1&_s1=$2&_s2=$3&_s3=$4&_s4=$5 last; 
+
+  # standard rewrite with implicit language
+  rewrite "^(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?(/[^\/\.]+)?/?$" /index.php?_s1=$1&_s2=$2&_s3=$3&_s4=$4&_s5=$5 last;
+}
+  
+  
+# no scripts in upload dir
+location /user {
+  location ~ \.php$ {return 403;}
+}
+
+# no scripts in image
+location /image {
+  location ~ \.php$ {return 403;}
+}
+
+# no scripts in image
+location /img {
+  location ~ \.php$ {return 403;}
+}
+
+# no scripts in photos
+location /photos {
+  location ~ \.php$ {return 403;}
+}
+
+# no scripts in css
+location /css {
+  location ~ \.php$ {return 403;}
+}
+
+# no scripts in js
+location /js {
+  location ~ \.php$ {return 403;}
+}
+
+# serve static files directly
+location ~* ^.+.(jpg|jpeg|gif|css|less|png|js|ico|html|xml|pdf|txt|otf|eot|svg|ttf|woff|woff2|map|json)$ {
+  access_log        off;
+  expires           max;
+}
+
+# force HTTPS for live site
+
+# force www. for live site
+
+# ignore rewrite if /foo/file.php and exists
+
+# don't allow anything but js, css, images, php, txt, xml
+

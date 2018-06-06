@@ -1,0 +1,33 @@
+          <div class="bg-holder full">
+            <div class="bg-mask"></div>
+            <div class="bg-blur" style="background-image:url({$city.image});"></div>
+            <div class="bg-content">
+              <div class="container">
+                <div class="loc-info text-right hidden-xs hidden-sm">
+                  <h3 class="loc-info-title">
+                    <img src="/traveler/img/flags/32/{$city.country_code|lower}.png" alt="{$city.country_code}" title="Image Title" />{$city.name}
+                  </h3>
+                  <p class="loc-info-weather simple-weather" data-location="{$city.name},{$city.country_code|lower}">
+                    <span class="loc-info-weather-num">?</span>
+                    <i class="im im-cloudy loc-info-weather-icon"></i>
+                  </p>
+                  {if ($scope.rental_count[$city.id])} 
+                  <ul class="loc-info-list">
+                    <li><a href="#"><i class="fa fa-building-o"></i> {$scope.rental_count[$city.id]} Rentals from &euro;{$scope.rental_price_min[$city.id]}/night</a>
+                    </li>
+                    <!--li><a href="#"><i class="fa fa-home"></i> 270 Rentals from $60/night</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-car"></i> 109 Car Offers from $34/day</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-bolt"></i> 195 Activities this Week</a>
+                    </li-->
+                  </ul>
+                  {/if}
+                  {if (!$city_id && $city_count > 1)}
+                  <a class="btn btn-white btn-ghost mt10" href="/{$city.link}/"><i class="fa fa-angle-right"></i> Explore</a>
+                  {/if}
+                </div>
+              </div>
+            </div>
+          </div>
+

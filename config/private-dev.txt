@@ -1,0 +1,23 @@
+{
+  "db": {"user":"patina","host":"dbint","db":"patina","dev":"patinadev","pass":"testpass"},
+  "sites": {
+    "100": {
+      "name": "Patina",
+      "fb": "facebook-key",
+      "fbs" : "facebook-secret",
+      "ppu": "paypal_api1.kjakman.com",
+      "ppp": "paypal-secret",
+      "ppe": "https://api-3t.paypal.com/nvp",
+      "pps": "paypal-test-secret",
+      "pput": "test_api1.kjakman.com",
+      "pppt": "paypal-test-secret",
+      "ppet":"https://api-3t.sandbox.paypal.com/nvp",
+      "ppst": "paypal-sandbox-secret",
+      "mt": "test_mollie_password",
+      "ml": "live_mollie_password",
+      "g" : "google-secret",
+      "gu" : "yourmail@gmail.com",
+      "gp" : "googlemailpassword"
+    }
+  }
+}

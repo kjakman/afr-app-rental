@@ -1,0 +1,42 @@
+server {
+  listen       80;
+  #listen       443;
+  server_name  yourdomain.com;
+  return       301 http://www.yourdomain.com$request_uri;
+}
+
+server {
+  listen 80;
+  
+  server_name test.yourdomain.com dev.yourdomain.com;
+  root   /web/sites/afr-app-gallery/www;
+  index index.php;
+
+  # Logging
+  access_log  /web/logs/test.yourdomain.com.access.log;
+  error_log  /web/logs/test.yourdomain.com.error.log notice;
+
+  #listen 443 ssl;
+  #ssl_certificate /etc/nginx/ssl/yourdomain.com/server.crt;
+  #ssl_certificate_key /etc/nginx/ssl/yourdomain.com/server.key;
+  
+  include /etc/nginx/security;
+}
+
+server {
+  listen 80;  
+  
+  server_name yourdomain.com www.yourdomain.com staging.yourdomain.com;
+  root   /web/sites/afr-app-gallery/www;
+  index index.php;
+
+  # Logging
+  access_log  /web/logs/www.yourdomain.com.access.log;
+  error_log  /web/logs/www.yourdomain.com.error.log notice;
+
+  #listen 443 ssl;
+  #ssl_certificate /etc/nginx/ssl/yourdomain.com/server.crt;
+  #ssl_certificate_key /etc/nginx/ssl/yourdomain.com/server.key;
+  
+  include /etc/nginx/security;
+}
